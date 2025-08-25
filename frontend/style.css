@@ -5,7 +5,7 @@
     padding: 0;
 }
 
-/* CSS Variables */
+/* CSS Variables - Dark Theme (Default) */
 :root {
     --primary-color: #2563eb;
     --primary-hover: #1d4ed8;
@@ -25,6 +25,43 @@
     --welcome-border: #2563eb;
 }
 
+/* Light Theme Variables - Optimized for Accessibility */
+[data-theme="light"] {
+    /* Primary colors with excellent contrast */
+    --primary-color: #1d4ed8;
+    --primary-hover: #1e40af;
+    
+    /* Background colors - pure white to light gray gradient */
+    --background: #ffffff;
+    --surface: #f8fafc;
+    --surface-rgb: 248, 250, 252;
+    --surface-hover: #e2e8f0;
+    
+    /* Text colors with WCAG AAA compliance */
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    
+    /* Border and UI elements */
+    --border-color: #cbd5e1;
+    
+    /* Message bubbles with proper contrast */
+    --user-message: #1d4ed8;
+    --assistant-message: #f1f5f9;
+    
+    /* Enhanced shadows for light theme */
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    
+    /* Consistent radius */
+    --radius: 12px;
+    
+    /* Focus ring with better visibility on light backgrounds */
+    --focus-ring: rgba(29, 78, 216, 0.15);
+    
+    /* Welcome message styling */
+    --welcome-bg: #eff6ff;
+    --welcome-border: #3b82f6;
+}
+
 /* Base Styles */
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -35,6 +72,28 @@ body {
     overflow: hidden;
     margin: 0;
     padding: 0;
+    /* Smooth theme transitions for all elements */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Smooth transitions for all elements that use CSS custom properties */
+*, *::before, *::after {
+    transition: background-color 0.3s ease, 
+                color 0.3s ease, 
+                border-color 0.3s ease, 
+                box-shadow 0.3s ease;
+}
+
+/* Preserve existing animations and transitions */
+.message,
+.theme-toggle-button,
+.theme-toggle-button .sun-icon,
+.theme-toggle-button .moon-icon,
+.source-card,
+.suggested-item,
+#sendButton,
+#chatInput {
+    /* These elements keep their specific transition properties */
 }
 
 /* Container - Full Screen */
@@ -45,6 +104,91 @@ body {
     flex-direction: column;
     margin: 0;
     padding: 0;
+    position: relative;
+}
+
+/* Theme Toggle Button */
+.theme-toggle-button {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 3rem;
+    height: 3rem;
+    background: var(--surface);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(8px);
+}
+
+.theme-toggle-button:hover {
+    background: var(--surface-hover);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+}
+
+.theme-toggle-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--focus-ring), var(--shadow);
+}
+
+.theme-toggle-button:active {
+    transform: translateY(0);
+    transition: transform 0.1s ease;
+}
+
+/* Theme Toggle Icons */
+.theme-toggle-button .sun-icon,
+.theme-toggle-button .moon-icon {
+    position: absolute;
+    color: var(--text-primary);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+}
+
+.theme-toggle-button .sun-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+.theme-toggle-button .moon-icon {
+    opacity: 0;
+    transform: rotate(180deg) scale(0.8);
+}
+
+/* Dark theme active state - show moon, hide sun */
+[data-theme="dark"] .theme-toggle-button .sun-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+[data-theme="dark"] .theme-toggle-button .moon-icon {
+    opacity: 0;
+    transform: rotate(180deg) scale(0.8);
+}
+
+/* Light theme active state - show sun, hide moon */
+[data-theme="light"] .theme-toggle-button .sun-icon {
+    opacity: 0;
+    transform: rotate(-180deg) scale(0.8);
+}
+
+[data-theme="light"] .theme-toggle-button .moon-icon {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+}
+
+/* Keyboard navigation improvements */
+.theme-toggle-button:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
 }
 
 /* Header - Hidden */
@@ -478,6 +622,58 @@ header h1 {
     margin: 0.5rem 0;
 }
 
+/* Light theme specific overrides for better readability */
+[data-theme="light"] .message-content code {
+    background-color: rgba(0, 0, 0, 0.08);
+    color: #374151;
+    border: 1px solid #e5e7eb;
+}
+
+[data-theme="light"] .message-content pre {
+    background-color: #f9fafb;
+    color: #374151;
+    border: 1px solid #e5e7eb;
+}
+
+[data-theme="light"] .message-content pre code {
+    background-color: transparent;
+    border: none;
+    color: inherit;
+}
+
+/* Light theme improvements for links and interactive elements */
+[data-theme="light"] .message-content a {
+    color: #1d4ed8;
+    text-decoration: underline;
+}
+
+[data-theme="light"] .message-content a:hover {
+    color: #1e40af;
+    text-decoration: none;
+}
+
+[data-theme="light"] .message-content blockquote {
+    border-left-color: #3b82f6;
+    background-color: rgba(59, 130, 246, 0.05);
+    color: #374151;
+}
+
+[data-theme="light"] .loading span {
+    background: #64748b;
+}
+
+[data-theme="light"] .error-message {
+    background: rgba(239, 68, 68, 0.08);
+    color: #dc2626;
+    border-color: rgba(239, 68, 68, 0.2);
+}
+
+[data-theme="light"] .success-message {
+    background: rgba(34, 197, 94, 0.08);
+    color: #16a34a;
+    border-color: rgba(34, 197, 94, 0.2);
+}
+
 .message-content pre code {
     background-color: transparent;
     padding: 0;
@@ -864,6 +1060,20 @@ details[open] .suggested-header::before {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    /* Theme toggle button mobile adjustments */
+    .theme-toggle-button {
+        top: 1rem;
+        right: 1rem;
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    
+    .theme-toggle-button .sun-icon,
+    .theme-toggle-button .moon-icon {
+        width: 18px;
+        height: 18px;
+    }
+    
     .main-content {
         flex-direction: column;
     }
