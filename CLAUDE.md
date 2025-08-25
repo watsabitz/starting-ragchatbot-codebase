@@ -28,6 +28,36 @@ cd backend && uv run uvicorn app:app --reload --port 8000
 - **Always use `uv` for package management - never use `pip` directly**
 - Frontend served as static files from `frontend/` directory
 
+### Code Quality Tools
+
+- **Black**: Automatic code formatting with 88-character line length
+- **Isort**: Import sorting configured to work with black
+- Configuration in `pyproject.toml` under `[tool.black]` and `[tool.isort]`
+
+#### Quality Scripts
+
+```bash
+# Format all code files
+python scripts/format_code.py
+
+# Check code formatting (CI/development)
+python scripts/quality_check.py
+```
+
+#### Manual Commands
+
+```bash
+# Format code with black
+python -m black backend/ *.py
+
+# Sort imports with isort
+python -m isort backend/ *.py --profile black
+
+# Check formatting without making changes
+python -m black backend/ *.py --check
+python -m isort backend/ *.py --check-only --profile black
+```
+
 ## Architecture Overview
 
 ### RAG System Pipeline
