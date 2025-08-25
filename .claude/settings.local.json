@@ -19,7 +19,8 @@
       "Bash(pip --version)",
       "Bash(curl:*)",
       "mcp__playwright__browser_evaluate",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
