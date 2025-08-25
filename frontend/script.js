@@ -5,7 +5,7 @@ const API_URL = '/api';
 let currentSessionId = null;
 
 // DOM elements
-let chatMessages, chatInput, sendButton, totalCourses, courseTitles;
+let chatMessages, chatInput, sendButton, totalCourses, courseTitles, newChatButton;
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     sendButton = document.getElementById('sendButton');
     totalCourses = document.getElementById('totalCourses');
     courseTitles = document.getElementById('courseTitles');
+    newChatButton = document.getElementById('newChatButton');
     
     setupEventListeners();
     createNewSession();
@@ -29,6 +30,8 @@ function setupEventListeners() {
         if (e.key === 'Enter') sendMessage();
     });
     
+    // New chat button
+    newChatButton.addEventListener('click', startNewChat);
     
     // Suggested questions
     document.querySelectorAll('.suggested-item').forEach(button => {
@@ -122,10 +125,59 @@ function addMessage(content, type, sources = null, isWelcome = false) {
     let html = `<div class="message-content">${displayContent}</div>`;
     
     if (sources && sources.length > 0) {
+        // Format sources with enhanced visual design
+        const formattedSources = sources.map((source, index) => {
+            if (typeof source === 'object' && source.text) {
+                if (source.link) {
+                    // Create beautiful source card with clickable link
+                    return `
+                        <div class="source-card">
+                            <a href="${source.link}" target="_blank" class="source-link">
+                                <div class="source-icon">🎥</div>
+                                <div class="source-details">
+                                    <span class="source-text">${source.text}</span>
+                                    <span class="source-label">Click to watch lesson</span>
+                                </div>
+                                <div class="source-arrow">→</div>
+                            </a>
+                        </div>
+                    `;
+                } else {
+                    // Enhanced styling for sources without links
+                    return `
+                        <div class="source-card source-card-static">
+                            <div class="source-icon">📄</div>
+                            <div class="source-details">
+                                <span class="source-text">${source.text}</span>
+                                <span class="source-label">Reference material</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            } else {
+                // Fallback for legacy string format
+                const text = typeof source === 'string' ? source : JSON.stringify(source);
+                return `
+                    <div class="source-card source-card-static">
+                        <div class="source-icon">📄</div>
+                        <div class="source-details">
+                            <span class="source-text">${text}</span>
+                            <span class="source-label">Reference material</span>
+                        </div>
+                    </div>
+                `;
+            }
+        });
+        
         html += `
-            <details class="sources-collapsible">
-                <summary class="sources-header">Sources</summary>
-                <div class="sources-content">${sources.join(', ')}</div>
+            <details class="sources-collapsible" open>
+                <summary class="sources-header">
+                    <span class="sources-title">📚 Sources</span>
+                    <span class="sources-count">${sources.length}</span>
+                </summary>
+                <div class="sources-content">
+                    ${formattedSources.join('')}
+                </div>
             </details>
         `;
     }
@@ -150,6 +202,17 @@ async function createNewSession() {
     currentSessionId = null;
     chatMessages.innerHTML = '';
     addMessage('Welcome to the Course Materials Assistant! I can help you with questions about courses, lessons and specific content. What would you like to know?', 'assistant', null, true);
+}
+
+function startNewChat() {
+    // Clear the current session and start fresh
+    currentSessionId = null;
+    chatMessages.innerHTML = '';
+    addMessage('Welcome to the Course Materials Assistant! I can help you with questions about courses, lessons and specific content. What would you like to know?', 'assistant', null, true);
+    
+    // Clear any text in the input field and focus on it
+    chatInput.value = '';
+    chatInput.focus();
 }
 
 // Load course statistics

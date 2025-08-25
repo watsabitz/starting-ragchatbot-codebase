@@ -99,3 +99,4 @@ All settings in `config.py`:
 - Document loading happens on server startup from `../docs` folder
 - make usre to use uv to manage all dependecies
 - make sure to use uv to manage all dependecies
+- don't run the server using ./run.sh. I will start it myself

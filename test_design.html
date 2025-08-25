@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - New Chat Button</title>
+    <link rel="stylesheet" href="frontend/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <!-- Left Sidebar -->
+            <aside class="sidebar">
+                <!-- New Chat Button -->
+                <div class="sidebar-section">
+                    <button class="new-chat-button" id="newChatButton">NEW CHAT</button>
+                </div>
+                
+                <!-- Course Stats -->
+                <div class="sidebar-section">
+                    <details class="stats-collapsible">
+                        <summary class="stats-header">Courses</summary>
+                        <div class="course-stats" id="courseStats">
+                            <div class="stat-item">
+                                <span class="stat-label">Number of courses:</span>
+                                <span class="stat-value" id="totalCourses">3</span>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+
+                <!-- Suggested Questions -->
+                <div class="sidebar-section">
+                    <details class="suggested-collapsible">
+                        <summary class="suggested-header">Try asking:</summary>
+                        <div class="suggested-items">
+                            <button class="suggested-item">Show me the course outline for [course name]</button>
+                            <button class="suggested-item">What lessons are in this course?</button>
+                            <button class="suggested-item">List all course titles and their lessons</button>
+                            <button class="suggested-item">Give me the course link and lesson details</button>
+                            <button class="suggested-item">What's the structure of [course name]?</button>
+                        </div>
+                    </details>
+                </div>
+            </aside>
+
+            <!-- Main Chat Area -->
+            <main class="chat-main">
+                <div class="chat-container">
+                    <div id="chatMessages" class="chat-messages">
+                        <div class="message assistant welcome-message">
+                            <div class="message-content">Welcome to the Course Materials Assistant! I can help you with questions about courses, lessons and specific content. What would you like to know?</div>
+                        </div>
+                        <div class="message user">
+                            <div class="message-content">Test message from user</div>
+                        </div>
+                        <div class="message assistant">
+                            <div class="message-content">Test response from assistant</div>
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" id="chatInput" placeholder="Ask about courses, lessons, or specific content...">
+                        <button id="sendButton">Send</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('newChatButton').addEventListener('click', function() {
+            const chatMessages = document.getElementById('chatMessages');
+            const chatInput = document.getElementById('chatInput');
+            
+            // Clear messages and add welcome message
+            chatMessages.innerHTML = `
+                <div class="message assistant welcome-message">
+                    <div class="message-content">Welcome to the Course Materials Assistant! I can help you with questions about courses, lessons and specific content. What would you like to know?</div>
+                </div>
+            `;
+            
+            // Clear input and focus
+            chatInput.value = '';
+            chatInput.focus();
+            
+            alert('New chat started! Chat cleared and session reset.');
+        });
+
+        // Add click handlers for suggested prompts
+        document.querySelectorAll('.suggested-item').forEach(button => {
+            button.addEventListener('click', function() {
+                const chatInput = document.getElementById('chatInput');
+                chatInput.value = this.textContent;
+                chatInput.focus();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -11,6 +11,7 @@
     --primary-hover: #1d4ed8;
     --background: #0f172a;
     --surface: #1e293b;
+    --surface-rgb: 30, 41, 59;
     --surface-hover: #334155;
     --text-primary: #f1f5f9;
     --text-secondary: #94a3b8;
@@ -218,31 +219,216 @@ header h1 {
     text-align: right;
 }
 
-/* Collapsible Sources */
+/* Enhanced Sources Collapsible */
 .sources-collapsible {
-    margin-top: 0.5rem;
-    font-size: 0.75rem;
-    color: var(--text-secondary);
+    margin-top: 1rem;
+    background: rgba(var(--surface-rgb), 0.5);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    overflow: hidden;
+    backdrop-filter: blur(8px);
 }
 
-.sources-collapsible summary {
+.sources-header {
     cursor: pointer;
-    padding: 0.25rem 0.5rem;
+    padding: 0.75rem 1rem;
     user-select: none;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 0.875rem;
+    background: linear-gradient(135deg, var(--surface) 0%, var(--surface-hover) 100%);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.2s ease;
 }
 
-.sources-collapsible summary:hover {
+.sources-header:hover {
+    background: linear-gradient(135deg, var(--surface-hover) 0%, var(--primary-color) 10%);
     color: var(--text-primary);
 }
 
-.sources-collapsible[open] summary {
-    margin-bottom: 0.25rem;
+.sources-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-primary);
+}
+
+.sources-count {
+    background: var(--primary-color);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    min-width: 1.5rem;
+    text-align: center;
+}
+
+.sources-collapsible[open] .sources-header {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .sources-content {
-    padding: 0 0.5rem 0.25rem 1.5rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: var(--background);
+}
+
+/* Beautiful Source Cards */
+.source-card {
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(var(--surface-rgb), 0.8) 100%);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.source-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
+    border-color: var(--primary-color);
+}
+
+.source-card.source-card-static {
+    opacity: 0.8;
+}
+
+.source-card.source-card-static:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.source-link {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    transition: all 0.2s ease;
+    gap: 0.75rem;
+}
+
+.source-link:hover {
+    background: linear-gradient(135deg, var(--surface-hover) 0%, rgba(37, 99, 235, 0.05) 100%);
+}
+
+.source-icon {
+    font-size: 1.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+    border-radius: 8px;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.source-card-static .source-icon {
+    background: linear-gradient(135deg, var(--text-secondary) 0%, var(--border-color) 100%);
+}
+
+.source-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.source-text {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.875rem;
+    line-height: 1.4;
+    word-wrap: break-word;
+}
+
+.source-label {
     color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 400;
+    opacity: 0.8;
+    transition: all 0.2s ease;
+}
+
+.source-link:hover .source-label {
+    color: var(--primary-color);
+    opacity: 1;
+}
+
+.source-arrow {
+    font-size: 1.25rem;
+    color: var(--primary-color);
+    font-weight: bold;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.source-link:hover .source-arrow {
+    transform: translateX(4px);
+    color: var(--primary-hover);
+}
+
+/* Animated pulse effect for clickable sources */
+.source-card:not(.source-card-static)::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    animation: pulse-glow 2s infinite;
+    opacity: 0;
+}
+
+.source-card:hover:not(.source-card-static)::before {
+    opacity: 1;
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        transform: translateX(-100%);
+    }
+    50% {
+        transform: translateX(100%);
+    }
+}
+
+/* Responsive design for sources */
+@media (max-width: 768px) {
+    .source-link {
+        padding: 0.75rem;
+        gap: 0.5rem;
+    }
+    
+    .source-icon {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1.25rem;
+    }
+    
+    .source-text {
+        font-size: 0.8rem;
+    }
+    
+    .source-label {
+        font-size: 0.7rem;
+    }
+    
+    .sources-header {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+    }
 }
 
 /* Markdown formatting styles */
@@ -477,18 +663,25 @@ header h1 {
     display: none;
 }
 
-.stats-header::before,
-.suggested-header::before {
-    content: '▶';
+.stats-header::before {
+    content: '📚';
     display: inline-block;
     margin-right: 0.5rem;
     transition: transform 0.2s ease;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
+}
+
+.suggested-header::before {
+    content: '💡';
+    display: inline-block;
+    margin-right: 0.5rem;
+    transition: transform 0.2s ease;
+    font-size: 0.875rem;
 }
 
 details[open] .stats-header::before,
 details[open] .suggested-header::before {
-    transform: rotate(90deg);
+    transform: scale(1.1);
 }
 
 /* Course Stats in Sidebar */
@@ -560,15 +753,15 @@ details[open] .suggested-header::before {
 }
 
 .course-titles-header::before {
-    content: '▶';
+    content: '📖';
     display: inline-block;
     margin-right: 0.5rem;
     transition: transform 0.2s ease;
-    font-size: 0.75rem;
+    font-size: 0.875rem;
 }
 
 .course-titles-collapsible[open] .course-titles-header::before {
-    transform: rotate(90deg);
+    transform: scale(1.1);
 }
 
 /* Course titles display */
@@ -599,6 +792,41 @@ details[open] .suggested-header::before {
     color: var(--text-secondary);
     font-style: italic;
     text-transform: none;
+}
+
+/* New Chat Button */
+.new-chat-button {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0.5rem 0;
+    border: none;
+    background: none;
+    list-style: none;
+    outline: none;
+    transition: color 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 0.5rem;
+}
+
+.new-chat-button:focus {
+    color: var(--primary-color);
+}
+
+.new-chat-button:hover {
+    color: var(--primary-color);
+}
+
+.new-chat-button::before {
+    content: '💬';
+    display: inline-block;
+    margin-right: 0.5rem;
+    transition: transform 0.2s ease;
+    font-size: 0.875rem;
 }
 
 /* Suggested Questions in Sidebar */
@@ -707,6 +935,11 @@ details[open] .suggested-header::before {
     
     .suggested-item {
         padding: 0.5rem 0.75rem;
+        font-size: 0.8rem;
+    }
+    
+    .new-chat-button {
+        padding: 0.5rem 0;
         font-size: 0.8rem;
     }
 }

@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(start \"C:\\Users\\watsabitz\\Desktop\\starting-ragchatbot-codebase\\query-flow-diagram.md\")",
+      "WebFetch(domain:docs.anthropic.com)",
+      "Bash(git add:*)",
+      "Bash(./run.sh)",
+      "Bash(python:*)",
+      "Bash(pip install:*)",
+      "Bash(start test_design.html)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_take_screenshot",
+      "Bash(uv sync:*)",
+      "Bash(set PYTHONPATH=%PYTHONPATH%)",
+      "Bash(%CD%)",
+      "mcp__playwright__browser_handle_dialog",
+      "mcp__playwright__browser_click",
+      "Bash(pip --version)",
+      "Bash(curl:*)",
+      "mcp__playwright__browser_evaluate",
+      "Bash(mkdir:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
