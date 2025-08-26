@@ -20,7 +20,9 @@
       "Bash(curl:*)",
       "mcp__playwright__browser_evaluate",
       "Bash(mkdir:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(git worktree:*)",
+      "Bash(git merge:*)"
     ],
     "deny": [],
     "ask": []
