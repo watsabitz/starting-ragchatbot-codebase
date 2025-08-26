@@ -22,9 +22,14 @@
       "Bash(mkdir:*)",
       "Bash(git commit:*)",
       "Bash(git worktree:*)",
-      "Bash(git merge:*)"
+      "Bash(git merge:*)",
+      "Bash(rm:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
-    "ask": []
+    "ask": [],
+    "additionalDirectories": [
+      "C:\\"
+    ]
   }
 }
