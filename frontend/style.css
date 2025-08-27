@@ -191,9 +191,12 @@ body {
     outline-offset: 2px;
 }
 
-/* Header - Hidden */
+/* Header - Visible with welcome styling */
 header {
-    display: none;
+    background: var(--surface);
+    padding: 2rem;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
 }
 
 header h1 {
@@ -210,6 +213,14 @@ header h1 {
     font-size: 0.95rem;
     color: var(--text-secondary);
     margin-top: 0.5rem;
+}
+
+.joke {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-top: 0.75rem;
+    font-style: italic;
+    opacity: 0.8;
 }
 
 /* Main Content Area with Sidebar */
