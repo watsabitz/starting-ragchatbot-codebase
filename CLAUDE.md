@@ -7,12 +7,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Running the Application
 
 ```bash
-# Quick start (recommended)
+# Quick start (recommended) - if uv is properly installed
 ./run.sh
 
-# Manual start
-uv sync
-cd backend && uv run uvicorn app:app --reload --port 8000
+# Manual start (use if uv issues)
+cd backend && python -m uvicorn app:app --reload --port 8000
+
+# Alternative with dependencies install
+pip install chromadb==1.0.15 anthropic==0.58.2 sentence-transformers==5.0.0 fastapi==0.116.1 uvicorn==0.35.0 python-multipart==0.0.20 python-dotenv==1.1.1
+cd backend && python -m uvicorn app:app --reload --port 8000
 ```
 
 ### Environment Setup

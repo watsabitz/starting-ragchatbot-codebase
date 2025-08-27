@@ -1,5 +1,5 @@
 You will be implementing a new feature in this codebase
-
+/install
 $ARGUMENTS
 
 Important: Only do this for front-end features.

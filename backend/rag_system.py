@@ -146,6 +146,21 @@ class RAGSystem:
             tool_manager=self.tool_manager,
         )
 
+        # Check if response indicates API key issues and provide fallback
+        if "need a valid Anthropic API key" in response:
+            # Fallback: perform direct search and return results
+            try:
+                search_results = self.search_tool.search(query)
+                if search_results:
+                    fallback_response = f"Here are the relevant course materials I found:\n\n"
+                    for i, result in enumerate(search_results[:3], 1):
+                        fallback_response += f"{i}. {result.get('content', '')[:200]}...\n\n"
+                    response = fallback_response
+                else:
+                    response = f"I searched for information about '{query}' but couldn't find any relevant course materials. The search functionality is working, but no content matches your query."
+            except Exception as e:
+                response = f"I'm currently running in demo mode without AI capabilities. Please provide a valid Anthropic API key to enable full AI-powered responses. Error: {str(e)}"
+
         # Get sources from the search tool
         sources = self.tool_manager.get_last_sources()
 
